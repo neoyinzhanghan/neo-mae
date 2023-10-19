@@ -33,7 +33,7 @@ def parse_args():
 def get_shared_folder() -> Path:
     user = os.getenv("USER")
     if Path("/media/hdd2/neo/MAE/checkpoint/").is_dir():
-        p = Path(f"/media/hdd2/neo/MAE/{user}/experiments")
+        p = Path(f"/media/hdd2/neo/MAE/checkpoint/{user}/experiments")
         p.mkdir(exist_ok=True)
         return p
 
