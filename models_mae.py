@@ -358,6 +358,8 @@ class MAEFeatureExtractor(nn.Module):
         x, _, _ = self.extraction_model.forward_encoder(x, mask_ratio=0.0)
 
         print(x) # for debugging purpose
+        # also print the dimension of x
+        print(x.shape)
         return x
 
 
