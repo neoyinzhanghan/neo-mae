@@ -344,7 +344,7 @@ class MAEFeatureExtractor(nn.Module):
         model = MaskedAutoencoderViT()
 
         # Load the checkpoint
-        checkpoint = torch.load("checkpoint-720.pth")
+        checkpoint = torch.load(ckpt_path)
         # Load the model weights from the checkpoint
         model.load_state_dict(checkpoint["model_state_dict"])
 
