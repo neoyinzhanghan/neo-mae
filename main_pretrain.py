@@ -33,7 +33,7 @@ from util.misc import NativeScalerWithGradNormCount as NativeScaler
 import models_mae
 
 from engine_pretrain import train_one_epoch
-from wsissl.dataset import PFDataset
+from wsissl.dataset import PFDataset, folder_train_test_split
 
 
 def get_args_parser():
@@ -191,8 +191,9 @@ def main(args):
 
     print("SETTING UP DATASET")
     # dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
+    train_folders, _ = folder_train_test_split(os.path.join(args.data_path, "train"), train_prop=1)
     dataset_train = PFDataset(
-        os.path.join(args.data_path, "train"),
+        folders=train_folders,
         num_images_per_epoch=args.num_images_per_epoch,
         transform=transform_train,
     )
