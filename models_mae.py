@@ -346,6 +346,8 @@ class MAEFeatureExtractor(nn.Module):
         # Load the checkpoint
         checkpoint = torch.load(ckpt_path)
         # Load the model weights from the checkpoint
+
+        print(checkpoint.keys())
         model.load_state_dict(checkpoint["model_state_dict"])
 
         model.eval()
