@@ -348,7 +348,7 @@ class MAEFeatureExtractor(nn.Module):
         # Load the model weights from the checkpoint
 
         print(checkpoint.keys())
-        model.load_state_dict(checkpoint["model_state_dict"])
+        model.load_state_dict(checkpoint["model"])
 
         model.eval()
 
