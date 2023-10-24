@@ -356,13 +356,15 @@ class MAEFeatureExtractor(nn.Module):
 
     def forward(self, x: torch.Tensor):
         """Forward pass"""
-
         x, _, _ = self.extraction_model.forward_encoder(x, mask_ratio=0.0)
 
-        # print(x) # for debugging purpose
-        # # also print the dimension of x
-        # print(x.shape)
-        return x
+        # Get the shape of the tensor
+        shape = x.shape
+        
+        # Flatten the last two dimensions
+        flattened_tensor = x.view(*shape[:-2], -1)
+
+        return flattened_tensor
 
 
 def load_model(ckpt_path: str):
