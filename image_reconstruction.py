@@ -4,15 +4,46 @@ import requests
 
 import torch
 import numpy as np
+import random
 
 import matplotlib.pyplot as plt
 from PIL import Image
 import models_mae
 
+from tqdm import tqdm
+
 
 # TODO look into whether we need to worry about the normalization
 
 # define the utils
+
+
+def sample_from_PF_dataset(data_dir):
+    # first get all the sub directories in data_dir
+    sub_dirs = [
+        os.path.join(data_dir, x)
+        for x in os.listdir(data_dir)
+        if os.path.isdir(os.path.join(data_dir, x))
+    ]
+
+    # randomly choose one of the sub directories
+    sub_dir = random.choice(sub_dirs)
+
+    # look for all the .jpg files in the sub directory
+    files = [
+        os.path.join(sub_dir, x) for x in os.listdir(sub_dir) if x.endswith(".jpg")
+    ]
+
+    # randomly choose one of the files
+    file = random.choice(files)
+
+    img = Image.open(file)
+    img = img.resize((224, 224))
+    img = np.array(img) / 255.0
+
+    assert img.shape == (224, 224, 3)
+
+    return img
 
 
 def show_image(image, title=""):
@@ -125,7 +156,18 @@ def run_one_image_and_save(img, model, save_path="reconstruction.png"):
 
     plt.savefig(save_path)
 
-if __name__ == "__main__":
 
-    data_dir = "/home/neo/data/MAE/MAE_dataset/MAE_dataset"
-    ckpt_path = "/home/neo/data/MAE/checkpoint/experiments/mae_vit_large_patch16_224/checkpoint.pth"
+if __name__ == "__main__":
+    data_dir = "/media/hdd2/pancreas_PF/"
+    ckpt_path = "/media/hdd2/neo/MAE/output_dir_0/checkpoint-799.pth"
+    save_dir = "/media/hdd2/neo/misc/MAE_reconstruction"
+    num_images = 10
+
+    model = prepare_model(ckpt_path, "mae_vit_large_patch16")
+
+    for i in tqdm(range(num_images)):
+        img = sample_from_PF_dataset(data_dir)
+
+        save_path = os.path.join(save_dir, f"reconstruction_{i}.png")
+
+        run_one_image_and_save(img, model, save_path=save_path)
