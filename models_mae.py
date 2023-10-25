@@ -358,11 +358,15 @@ class MAEFeatureExtractor(nn.Module):
         """Forward pass"""
         x, _, _ = self.extraction_model.forward_encoder(x, mask_ratio=0.0)
 
-        # Get the shape of the tensor
-        shape = x.shape
-        
-        # Flatten the last two dimensions
-        x = x.view(*shape[:-2], -1)
+        flatten = True
+
+        if flatten:
+            
+            # Get the shape of the tensor
+            shape = x.shape
+            
+            # Flatten the last two dimensions
+            x = x.view(*shape[:-2], -1)
 
         return x
 
