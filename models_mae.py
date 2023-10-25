@@ -338,7 +338,7 @@ class MAEFeatureExtractor(nn.Module):
     - extraction_model: an MAE model with mask ratio turned to 0
     """
 
-    def __init__(self, ckpt_path: str):
+    def __init__(self, ckpt_path: str, flatten=False):
         super().__init__()
 
         model = MaskedAutoencoderViT()
@@ -353,15 +353,14 @@ class MAEFeatureExtractor(nn.Module):
         model.eval()
 
         self.extraction_model = model
+        self.flatten=flatten
 
     def forward(self, x: torch.Tensor):
         """Forward pass"""
         x, _, _ = self.extraction_model.forward_encoder(x, mask_ratio=0.0)
 
-        flatten = True
+        if self.flatten:
 
-        if flatten:
-            
             # Get the shape of the tensor
             shape = x.shape
             
@@ -371,7 +370,7 @@ class MAEFeatureExtractor(nn.Module):
         return x
 
 
-def load_model(ckpt_path: str):
+def load_model(ckpt_path: str, flatten=False):
     """Load an MAE feature extractor model from checkpoint"""
 
-    return MAEFeatureExtractor(ckpt_path)
+    return MAEFeatureExtractor(ckpt_path, flatten=flatten)

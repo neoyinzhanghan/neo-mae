@@ -75,6 +75,10 @@ group = parser.add_argument_group("Model")
 
 group.add_argument("--ckpt_path", type=str, help="Path to the MAE checkpoint file.")
 
+group.add_argument(
+    "--flatten", default=False, action="store_true", help="Flatten the model output."
+)
+
 
 ####################################
 group = parser.add_argument_group("Workflow")
@@ -205,7 +209,11 @@ else:
 
 if args.continue_on_error_with_log is not None:
     os.makedirs(args.continue_on_error_with_log, exist_ok=True)
-    print('Continue on error protocol activated -- saving error logs to "{}"'.format(args.continue_on_error_with_log))
+    print(
+        'Continue on error protocol activated -- saving error logs to "{}"'.format(
+            args.continue_on_error_with_log
+        )
+    )
 
 for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
     try:
