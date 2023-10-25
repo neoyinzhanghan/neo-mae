@@ -205,6 +205,7 @@ else:
 
 if args.continue_on_error_with_log is not None:
     os.makedirs(args.continue_on_error_with_log, exist_ok=True)
+    print('Continue on error protocol activated -- saving error logs to "{}"'.format(args.continue_on_error_with_log))
 
 for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
     try:
