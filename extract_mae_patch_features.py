@@ -206,7 +206,7 @@ else:
 if args.continue_on_error_with_log is not None:
     os.makedirs(args.continue_on_error_with_log, exist_ok=True)
 
-for wsi_fpath in tqdm(wsi_fpaths):
+for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
     try:
         #########
         # Setup #
