@@ -360,6 +360,7 @@ class MAEFeatureExtractor(nn.Module):
 
         class_tokens = x[:, 0, :]
 
+        print(class_tokens.shape)
         return class_tokens
 
 
