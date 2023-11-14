@@ -267,7 +267,7 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
             compute=compute,
             num_gpus=num_gpus_per_actor,
             zero_copy_batch=True,
-        ).take()
+        ).take(len(patches))
         # write_numpy("local:{}".format(save_dir_this_wsi), column="features")
 
         features = np.stack([b["features"] for b in output])
