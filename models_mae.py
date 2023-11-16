@@ -358,9 +358,11 @@ class MAEFeatureExtractor(nn.Module):
         """Forward pass"""
         x, _, _ = self.extraction_model.forward_encoder(x, mask_ratio=0.0)
 
-        class_tokens = x[:, 0, :]
+        # class_tokens = x[:, 0, :]
 
-        return class_tokens
+        average_pooled = x[:, 1:, :].mean(dim=1)
+
+        return average_pooled
 
 
 def load_model(ckpt_path: str):
