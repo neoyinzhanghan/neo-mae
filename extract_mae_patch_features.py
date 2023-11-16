@@ -103,10 +103,21 @@ group.add_argument(
     help="If None,then will not continue on error. Otherwise provide a directory to save error logs.",
 )
 
+group.add_argument(
+    "--timeout_length",
+    default=None,
+    type=int,
+    help="How long to wait for a single trial to finish (in seconds).",
+)
+
 args = parser.parse_args()
 
 if args.is_dpr:
     raise NotImplementedError("TODO: add")
+
+# Set the default timeout for Ray Tune trial execution
+if args.timeout_length is not None:
+    ray.tune.ray_trial_executor.DEFAULT_GET_TIMEOUT = float(args.timeout_length)
 
 ray.init()
 
