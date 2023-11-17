@@ -10,6 +10,7 @@ import numpy as np
 import h5py
 import ray
 from ray import tune
+import multiprocessing
 
 from yatt.wsi_files import find_wsi_paths
 from yatt.pipe.utils import find_fpaths_with_matching_folder
@@ -120,7 +121,7 @@ if args.is_dpr:
 if args.timeout_length is not None:
     tune.stopper.TimeoutStopper.DEFAULT_GET_TIMEOUT = float(args.timeout_length)
 
-ray.init()
+ray.init(num_cpus=max(1, multiprocessing.cpu_count()-5))
 
 n_avail_gpus = torch.cuda.device_count()
 print("Found {} GPUs".format(n_avail_gpus))
