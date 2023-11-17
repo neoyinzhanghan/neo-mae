@@ -117,9 +117,9 @@ args = parser.parse_args()
 if args.is_dpr:
     raise NotImplementedError("TODO: add")
 
-# # Set the default timeout for Ray Tune trial execution
-# if args.timeout_length is not None:
-#     tune.stopper.TimeoutStopper.DEFAULT_GET_TIMEOUT = float(args.timeout_length)
+# Set the default timeout for Ray Tune trial execution
+if args.timeout_length is not None:
+    tune.stopper.TimeoutStopper.DEFAULT_GET_TIMEOUT = float(args.timeout_length)
 
 print("Initializing Ray...")
 ray.init()
