@@ -121,7 +121,7 @@ if args.is_dpr:
 if args.timeout_length is not None:
     tune.stopper.TimeoutStopper.DEFAULT_GET_TIMEOUT = float(args.timeout_length)
 
-ray.init(num_cpus=max(1, multiprocessing.cpu_count()-5))
+ray.init(num_cpus=1)
 
 n_avail_gpus = torch.cuda.device_count()
 print("Found {} GPUs".format(n_avail_gpus))
