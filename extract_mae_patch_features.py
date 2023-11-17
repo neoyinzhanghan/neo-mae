@@ -9,7 +9,7 @@ from datetime import datetime
 import numpy as np
 import h5py
 import ray
-from ray import tune
+from ray.tune import ray_trial_executor
 
 from yatt.wsi_files import find_wsi_paths
 from yatt.pipe.utils import find_fpaths_with_matching_folder
@@ -118,7 +118,7 @@ if args.is_dpr:
 
 # Set the default timeout for Ray Tune trial execution
 if args.timeout_length is not None:
-    tune.ray_trial_executor.DEFAULT_GET_TIMEOUT = float(args.timeout_length)
+    ray_trial_executor.DEFAULT_GET_TIMEOUT = float(args.timeout_length)
 
 ray.init()
 
