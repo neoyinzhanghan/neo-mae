@@ -269,6 +269,7 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         load_patch_runtime = time() - start_time
 
         print(type(patches))
+        print(patches.shape)
 
         sys.exit()
 
