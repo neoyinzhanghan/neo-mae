@@ -272,8 +272,6 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         ####################
         start_time = time()
 
-        print(type(patches), patches.shape)
-
         ds = ray.data.from_numpy(patches)
         transformed_ds = ds.map(NormalizeImageNp())
 
