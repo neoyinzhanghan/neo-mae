@@ -268,17 +268,14 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
 
         load_patch_runtime = time() - start_time
 
-        print(type(patches))
-        print(patches.shape)
-
-        sys.exit()
+        patches_lst = [patches[i] for i in range(patches.shape[0])]
 
         ####################
         # Extract features #
         ####################
         start_time = time()
 
-        ds = ray.data.from_numpy(patches)
+        ds = ray.data.from_numpy(patches_lst)
         transformed_ds = ds.map(NormalizeImageNp())
 
         output = transformed_ds.map_batches(
