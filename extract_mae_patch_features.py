@@ -356,6 +356,7 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         if args.continue_on_error_with_log is None:
             raise e
         else:
+            os.makedirs(args.continue_on_error_with_log, exist_ok=True)
             # save an error log with the WSI name
             error_log_fpath = os.path.join(
                 args.continue_on_error_with_log, "{}.txt".format(wsi_name)
