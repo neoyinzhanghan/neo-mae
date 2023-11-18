@@ -11,6 +11,7 @@ import h5py
 import ray
 from ray import tune
 import multiprocessing
+import sys
 
 from yatt.wsi_files import find_wsi_paths
 from yatt.pipe.utils import find_fpaths_with_matching_folder
@@ -266,6 +267,10 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         )
 
         load_patch_runtime = time() - start_time
+
+        print(type(patches))
+
+        sys.exit()
 
         ####################
         # Extract features #
