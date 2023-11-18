@@ -281,8 +281,7 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
 
         sample = ds.take(1)
         if sample:
-            # Assuming each record is a NumPy array or similar structure
-            print("Shape of the first record:", sample[0].shape)
+            print(sample[0])
 
         sys.exit()
 
