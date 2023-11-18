@@ -296,7 +296,7 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
 
         # get the first 10 records of the dataset
 
-        # sys.exit()
+        sys.exit()
 
         transformed_ds = ds.map(NormalizeImageNp())
 
