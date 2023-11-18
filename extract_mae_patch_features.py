@@ -273,7 +273,7 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         ####################
         start_time = time()
 
-        # ds = ray.data.from_numpy(patches)
+        # ds = ray.data.from_numpy(patches) # DEPRECATED TODO remove this
 
         patches_lst = [patches[i] for i in range(patches.shape[0])]
 
@@ -282,19 +282,6 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
 
         # Create the dataset using ray.data.from_items()
         ds = ray.data.from_items(data_with_key)
-
-        # num_records = ds.count()
-        # print("Number of records in the dataset:", num_records)
-
-        # sample = ds.take(1)
-        # if sample:
-        #     print(sample[0])
-
-        # # get the schema of the dataset
-        # schema = ds.schema()
-        # print("Schema of the dataset:", schema)
-
-        # sys.exit()
 
         transformed_ds = ds.map(NormalizeImageNp())
 
