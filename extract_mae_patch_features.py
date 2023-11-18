@@ -283,6 +283,10 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         if sample:
             print(sample[0])
 
+        # get the schema of the dataset
+        schema = ds.schema()
+        print("Schema of the dataset:", schema)
+
         sys.exit()
 
         transformed_ds = ds.map(NormalizeImageNp())
