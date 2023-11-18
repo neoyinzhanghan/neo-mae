@@ -276,13 +276,15 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         start_time = time()
 
         ds = ray.data.from_numpy(patches)
-        total_records = ds.size()
-        print("Total number of records:", total_records)
-        schema = ds.schema()
-        print("Schema of the dataset:", schema)
+        num_records = ds.count()
+        print("Number of records in the dataset:", num_records)
+
+        sample = ds.take(1)
+        if sample:
+            # Assuming each record is a NumPy array or similar structure
+            print("Shape of the first record:", sample[0].shape)
 
         sys.exit()
-
 
         transformed_ds = ds.map(NormalizeImageNp())
 
