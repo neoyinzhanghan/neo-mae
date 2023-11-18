@@ -268,14 +268,17 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
 
         load_patch_runtime = time() - start_time
 
-        # patches_lst = [patches[i] for i in range(patches.shape[0])]
+        patches_lst = [patches[i] for i in range(patches.shape[0])]
 
         ####################
         # Extract features #
         ####################
         start_time = time()
 
-        ds = ray.data.from_numpy(patches)
+        # ds = ray.data.from_numpy(patches)
+
+        ds = ray.data.from_items(patches_lst)
+
         num_records = ds.count()
         print("Number of records in the dataset:", num_records)
 
@@ -286,6 +289,8 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         # get the schema of the dataset
         schema = ds.schema()
         print("Schema of the dataset:", schema)
+
+        # get the first 10 records of the dataset
 
         sys.exit()
 
