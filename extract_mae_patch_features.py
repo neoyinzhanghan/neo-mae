@@ -283,18 +283,16 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         # Create the dataset using ray.data.from_items()
         ds = ray.data.from_items(data_with_key)
 
-        # num_records = ds.count()
-        # print("Number of records in the dataset:", num_records)
+        num_records = ds.count()
+        print("Number of records in the dataset:", num_records)
 
-        # sample = ds.take(1)
-        # if sample:
-        #     print(sample[0])
+        sample = ds.take(1)
+        if sample:
+            print(sample[0])
 
-        # # get the schema of the dataset
-        # schema = ds.schema()
-        # print("Schema of the dataset:", schema)
-
-        # get the first 10 records of the dataset
+        # get the schema of the dataset
+        schema = ds.schema()
+        print("Schema of the dataset:", schema)
 
         sys.exit()
 
