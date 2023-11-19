@@ -2,7 +2,7 @@ import h5py
 import torch
 
 # Reopening the HDF5 file to check other datasets
-file_path = '/media/hdd2/one_slide_mae/23.CFNA.9 A1 H&E _154610-patch_features.h5'
+file_path = '/media/hdd2/pancreas_MAE_1/23.CFNA.347 A1 H&E _095100-patch_features.h5'
 
 # Dictionary to hold tensor data from each dataset
 tensors_from_datasets = {}
