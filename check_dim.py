@@ -16,4 +16,3 @@ with h5py.File(file_path, 'r') as file:
 # Checking the dimensions of each extracted tensor
 tensor_dimensions = {key: tensor.shape for key, tensor in tensors_from_datasets.items()}
 print(tensor_dimensions)
- 
