@@ -197,7 +197,7 @@ def main(args):
         num_images_per_epoch=args.num_images_per_epoch,
         transform=transform_train,
     )
-    print(dataset_train)
+    # print(dataset_train)
 
     if True:  # args.distributed:
         num_tasks = misc.get_world_size()
