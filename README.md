@@ -154,3 +154,7 @@ The pre-training instruction is in [PRETRAIN.md](PRETRAIN.md).
 ### License
 
 This project is under the CC-BY-NC 4.0 license. See [LICENSE](LICENSE) for details.
+
+## MAE for Pathology WSIs
+
+TBC
