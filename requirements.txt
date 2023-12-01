@@ -1,0 +1,16 @@
+h5py==3.10.0
+matplotlib==3.8.0
+numpy
+pandas==2.1.1
+Pillow
+PyYAML==6.0.1
+ray==2.7.1
+referencing==0.30.2
+scikit-image==0.22.0
+scipy==1.11.3
+tensorboard
+timm
+torch==2.0.1
+torchaudio==2.0.2
+torchvision==0.15.2
+tqdm

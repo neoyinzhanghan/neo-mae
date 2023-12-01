@@ -283,7 +283,7 @@ for wsi_fpath in tqdm(wsi_fpaths, desc="WSI"):
         # Create the dataset using ray.data.from_items()
         ds = ray.data.from_items(data_with_key)
 
-        transformed_ds = ds.map(NormalizeImageNp())
+        transformed_ds = ds.map(NormalizeImageNp()) # TODO THIS LINE IS CAUSING ERROR
 
         output = transformed_ds.map_batches(
             fn=FeatureExtractor,
