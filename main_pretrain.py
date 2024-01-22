@@ -190,14 +190,19 @@ def main(args):
     )
 
     print("SETTING UP DATASET")
-    # dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
-    train_folders, _ = folder_train_test_split(os.path.join(args.data_path, "train"), train_prop=1)
-    dataset_train = PFDataset(
-        folders=train_folders,
-        num_images_per_epoch=args.num_images_per_epoch,
-        transform=transform_train,
+    # # dataset_train = datasets.ImageFolder(os.path.join(args.data_path, 'train'), transform=transform_train)
+    # train_folders, _ = folder_train_test_split(os.path.join(args.data_path, "train"), train_prop=1)
+    # dataset_train = PFDataset(
+    #     folders=train_folders,
+    #     num_images_per_epoch=args.num_images_per_epoch,
+    #     transform=transform_train,
+    # )
+    # # print(dataset_train)
+
+    #  the datapath data is saved in imagenet format
+    dataset_train = datasets.ImageFolder(
+        os.path.join(args.data_path, "train"), transform=transform_train
     )
-    # print(dataset_train)
 
     if True:  # args.distributed:
         num_tasks = misc.get_world_size()
