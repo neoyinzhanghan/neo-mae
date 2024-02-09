@@ -19,7 +19,9 @@ import util.lr_sched as lr_sched
 
 
 def train_one_epoch(model: torch.nn.Module,
-                    data_loader: Iterable, optimizer: torch.optim.Optimizer,
+                    train_loader: Iterable, 
+                    validation_loader: Iterable,
+                    optimizer: torch.optim.Optimizer,
                     device: torch.device, epoch: int, loss_scaler,
                     log_writer=None,
                     args=None):
@@ -36,11 +38,11 @@ def train_one_epoch(model: torch.nn.Module,
     if log_writer is not None:
         print('log_dir: {}'.format(log_writer.log_dir))
 
-    for data_iter_step, (samples, _) in enumerate(metric_logger.log_every(data_loader, print_freq, header)):
+    for data_iter_step, (samples, _) in enumerate(metric_logger.log_every(train_loader, print_freq, header)):
     
         # we use a per iteration (instead of per epoch) lr scheduler
         if data_iter_step % accum_iter == 0:
-            lr_sched.adjust_learning_rate(optimizer, data_iter_step / len(data_loader) + epoch, args)
+            lr_sched.adjust_learning_rate(optimizer, data_iter_step / len(train_loader) + epoch, args)
 
         samples = samples.to(device, non_blocking=True)
 
@@ -71,10 +73,26 @@ def train_one_epoch(model: torch.nn.Module,
             """ We use epoch_1000x as the x-axis in tensorboard.
             This calibrates different curves when batch size changes.
             """
-            epoch_1000x = int((data_iter_step / len(data_loader) + epoch) * 1000)
+            epoch_1000x = int((data_iter_step / len(train_loader) + epoch) * 1000)
             log_writer.add_scalar('train_loss', loss_value_reduce, epoch_1000x)
             log_writer.add_scalar('lr', lr, epoch_1000x)
 
+        # After training steps, add validation evaluation
+        model.eval()  # Set model to evaluation mode
+        validation_loss = 0.0
+        with torch.no_grad():  # No gradients needed for validation
+            for samples, _ in validation_loader:
+                samples = samples.to(device, non_blocking=True)
+                loss, _, _ = model(samples, mask_ratio=args.mask_ratio)
+                validation_loss += loss.item() * samples.size(0)
+        validation_loss /= len(validation_loader.dataset)
+
+        # Log validation loss
+        if log_writer is not None:
+            log_writer.add_scalar('val_loss', validation_loss, epoch)
+
+        # Ensure model is back to training mode
+        model.train()
 
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()

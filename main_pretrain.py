@@ -204,6 +204,10 @@ def main(args):
         os.path.join(args.data_path, "train"), transform=transform_train
     )
 
+    dataset_validation = datasets.ImageFolder(
+        os.path.join(args.data_path, "val"), transform=transform_train
+    )
+
     if True:  # args.distributed:
         num_tasks = misc.get_world_size()
         global_rank = misc.get_rank()
@@ -227,6 +231,15 @@ def main(args):
         num_workers=args.num_workers,
         pin_memory=args.pin_mem,
         drop_last=True,
+    )
+
+    data_loader_validation = torch.utils.data.DataLoader(
+        dataset_validation,
+        batch_size=args.batch_size,
+        shuffle=False,
+        num_workers=args.num_workers,
+        pin_memory=args.pin_mem,
+        drop_last=False,
     )
 
     # define the model
@@ -275,6 +288,7 @@ def main(args):
         train_stats = train_one_epoch(
             model,
             data_loader_train,
+            data_loader_validation,
             optimizer,
             device,
             epoch,
