@@ -205,7 +205,7 @@ def main(args):
     )
 
     dataset_validation = datasets.ImageFolder(
-        os.path.join(args.data_path, "val"), transform=transform_train
+        os.path.join(args.data_path, "train"), transform=transform_train
     )
 
     if True:  # args.distributed:
