@@ -92,6 +92,7 @@ def train_one_epoch(model: torch.nn.Module,
     # Log validation loss
     if log_writer is not None:
         log_writer.add_scalar('val_loss', validation_loss, epoch)
+        log_writer.add_scalar('test_val_loss', 123.456, epoch)
 
     # Ensure model is back to training mode
     model.train()
