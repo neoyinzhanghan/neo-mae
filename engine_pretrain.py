@@ -79,6 +79,8 @@ def train_one_epoch(model: torch.nn.Module,
 
     # After training steps, add validation evaluation
     model.eval()  # Set model to evaluation mode
+
+    print("Calculating validation loss... at end of epoch {}".format(epoch))
     validation_losses = []
     with torch.no_grad():  # No gradients needed for validation
         for samples, _ in validation_loader:
