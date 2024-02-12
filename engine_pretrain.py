@@ -87,12 +87,12 @@ def train_one_epoch(model: torch.nn.Module,
                 validation_losses.append(loss.item())
         validation_loss = sum(validation_losses) / len(validation_loader.dataset)
 
-        # Log validation loss
-        if log_writer is not None:
-            log_writer.add_scalar('val_loss', validation_loss, epoch)
+    # Log validation loss
+    if log_writer is not None:
+        log_writer.add_scalar('val_loss', validation_loss, epoch)
 
-        # Ensure model is back to training mode
-        model.train()
+    # Ensure model is back to training mode
+    model.train()
 
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
