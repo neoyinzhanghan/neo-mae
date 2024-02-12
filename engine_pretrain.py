@@ -77,15 +77,15 @@ def train_one_epoch(model: torch.nn.Module,
             log_writer.add_scalar('train_loss', loss_value_reduce, epoch_1000x)
             log_writer.add_scalar('lr', lr, epoch_1000x)
 
-        # After training steps, add validation evaluation
-        model.eval()  # Set model to evaluation mode
-        validation_losses = []
-        with torch.no_grad():  # No gradients needed for validation
-            for samples, _ in validation_loader:
-                samples = samples.to(device, non_blocking=True)
-                loss, _, _ = model(samples, mask_ratio=args.mask_ratio)
-                validation_losses.append(loss.item())
-        validation_loss = sum(validation_losses) / len(validation_loader.dataset)
+    # After training steps, add validation evaluation
+    model.eval()  # Set model to evaluation mode
+    validation_losses = []
+    with torch.no_grad():  # No gradients needed for validation
+        for samples, _ in validation_loader:
+            samples = samples.to(device, non_blocking=True)
+            loss, _, _ = model(samples, mask_ratio=args.mask_ratio)
+            validation_losses.append(loss.item())
+    validation_loss = sum(validation_losses) / len(validation_loader.dataset)
 
     # Log validation loss
     if log_writer is not None:
