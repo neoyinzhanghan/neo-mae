@@ -87,7 +87,9 @@ def train_one_epoch(model: torch.nn.Module,
             samples = samples.to(device, non_blocking=True)
             loss, _, _ = model(samples, mask_ratio=args.mask_ratio)
             validation_losses.append(loss.item())
+
     validation_loss = sum(validation_losses) / len(validation_loader.dataset)
+    print("Validation loss: {}".format(validation_loss))
 
     # Log validation loss
     if log_writer is not None:
