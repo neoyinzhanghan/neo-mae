@@ -86,7 +86,13 @@ def train_one_epoch(model: torch.nn.Module,
         for samples, _ in validation_loader:
             samples = samples.to(device, non_blocking=True)
             loss, _, _ = model(samples, mask_ratio=args.mask_ratio)
+
+            loss /= accum_iter
             validation_losses.append(loss.item())
+            
+            loss_value_reduce = misc.all_reduce_mean(loss_value)
+
+            validation_losses.append(loss_value_reduce)
 
     validation_loss = sum(validation_losses) / len(validation_loader.dataset)
     print("Validation loss: {}".format(validation_loss))
