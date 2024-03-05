@@ -55,7 +55,7 @@ def get_args_parser():
     # Model parameters
     parser.add_argument(
         "--model",
-        default="mae_vit_large_patch16",
+        default="mae_vit_base_patch16",
         type=str,
         metavar="MODEL",
         help="Name of model to train",
